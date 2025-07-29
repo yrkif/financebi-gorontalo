@@ -1,32 +1,143 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { PlusCircle, TrendingUp, TrendingDown, DollarSign, Target, User, Settings, BarChart3, PieChart, AlertCircle, CheckCircle, Trophy, Star, Zap, Heart, Briefcase, Home, CreditCard, ShoppingCart, Car, Utensils, Coffee, Gift, Phone, Book, Gamepad2, Plus, Eye, EyeOff, Calendar, Filter, Download, Upload, Bell, Shield, Sun, Moon } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 
-// Supabase configuration - using environment variables
+// Supabase configuration
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// MEMOIZED INPUT COMPONENT - This prevents re-renders!
+const InputField = memo(({ 
+  label, 
+  type, 
+  value, 
+  onChange, 
+  placeholder, 
+  required, 
+  autoComplete 
+}) => {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-2">
+        {label}
+      </label>
+      <input 
+        type={type}
+        value={value}
+        onChange={onChange}
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        placeholder={placeholder}
+        required={required}
+        autoComplete={autoComplete}
+      />
+    </div>
+  );
+});
+
+// MEMOIZED BUTTON COMPONENT
+const Button = memo(({ 
+  type = "button", 
+  onClick, 
+  disabled, 
+  className, 
+  children 
+}) => {
+  return (
+    <button 
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={className}
+    >
+      {children}
+    </button>
+  );
+});
+
+// MEMOIZED LOGIN FORM COMPONENT
+const LoginForm = memo(({ 
+  email, 
+  password, 
+  onEmailChange, 
+  onPasswordChange, 
+  onSubmit, 
+  onToggleMode, 
+  isRegistering, 
+  loading 
+}) => {
+  return (
+    <form onSubmit={onSubmit} className="space-y-4">
+      <InputField
+        label="Email"
+        type="email"
+        value={email}
+        onChange={onEmailChange}
+        placeholder="nama@bi-gorontalo.go.id"
+        required={true}
+        autoComplete="email"
+      />
+      
+      <InputField
+        label="Password"
+        type="password"
+        value={password}
+        onChange={onPasswordChange}
+        placeholder="••••••••"
+        required={true}
+        autoComplete={isRegistering ? "new-password" : "current-password"}
+      />
+      
+      <Button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 transition-colors"
+      >
+        {loading ? 'Loading...' : (isRegistering ? 'Daftar' : 'Masuk')}
+      </Button>
+      
+      <Button
+        type="button"
+        onClick={onToggleMode}
+        className="w-full border border-blue-600 text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+      >
+        {isRegistering ? 'Sudah punya akun? Masuk' : 'Belum punya akun? Daftar'}
+      </Button>
+    </form>
+  );
+});
+
+// MAIN APP COMPONENT
 const FinanceApp = () => {
+  // State management - separate primitive states
   const [currentUser, setCurrentUser] = useState(null);
   const [currentPage, setCurrentPage] = useState('login');
-  const [darkMode, setDarkMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
-
-  // Login state - FIXED: Separate state for form
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Memoized auth functions to prevent re-creation
+  // Memoized handlers that don't recreate on every render
+  const handleEmailChange = useCallback((e) => {
+    setEmail(e.target.value);
+  }, []);
+
+  const handlePasswordChange = useCallback((e) => {
+    setPassword(e.target.value);
+  }, []);
+
+  const handleToggleMode = useCallback(() => {
+    setIsRegistering(prev => !prev);
+  }, []);
+
   const handleLogin = useCallback(async (e) => {
     e.preventDefault();
     setLoading(true);
     
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
+        email,
+        password,
       });
 
       if (error) throw error;
@@ -35,7 +146,7 @@ const FinanceApp = () => {
       setCurrentUser(data.user);
       setCurrentPage('dashboard');
     } catch (error) {
-      alert('Error: ' + error.message);
+      alert('Login Error: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -47,8 +158,8 @@ const FinanceApp = () => {
     
     try {
       const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
+        email,
+        password,
       });
 
       if (error) throw error;
@@ -56,27 +167,22 @@ const FinanceApp = () => {
       alert('Registrasi berhasil! Silakan cek email untuk verifikasi.');
       setIsRegistering(false);
     } catch (error) {
-      alert('Error: ' + error.message);
+      alert('Register Error: ' + error.message);
     } finally {
       setLoading(false);
     }
   }, [email, password]);
 
-  const toggleAuthMode = useCallback(() => {
-    setIsRegistering(prev => !prev);
+  const handleLogout = useCallback(async () => {
+    await supabase.auth.signOut();
+    setCurrentUser(null);
+    setCurrentPage('login');
+    setEmail('');
+    setPassword('');
   }, []);
 
-  // Memoized input handlers
-  const handleEmailChange = useCallback((e) => {
-    setEmail(e.target.value);
-  }, []);
-
-  const handlePasswordChange = useCallback((e) => {
-    setPassword(e.target.value);
-  }, []);
-
-  // Login Component - FIXED: No inline functions
-  const LoginPage = () => (
+  // MEMOIZED LOGIN PAGE COMPONENT
+  const LoginPage = memo(() => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
@@ -88,79 +194,49 @@ const FinanceApp = () => {
           <p className="text-sm text-blue-600 font-medium">Bank Indonesia Gorontalo</p>
         </div>
         
-        <form onSubmit={isRegistering ? handleRegister : handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-            <input 
-              type="email" 
-              value={email}
-              onChange={handleEmailChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="nama@bi-gorontalo.go.id"
-              required
-              autoComplete="email"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-            <input 
-              type="password" 
-              value={password}
-              onChange={handlePasswordChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="••••••••"
-              required
-              autoComplete={isRegistering ? "new-password" : "current-password"}
-            />
-          </div>
-          <button 
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 transition-colors"
-          >
-            {loading ? 'Loading...' : (isRegistering ? 'Daftar' : 'Masuk')}
-          </button>
-          <button 
-            type="button"
-            onClick={toggleAuthMode}
-            className="w-full border border-blue-600 text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
-          >
-            {isRegistering ? 'Sudah punya akun? Masuk' : 'Belum punya akun? Daftar'}
-          </button>
-        </form>
+        <LoginForm
+          email={email}
+          password={password}
+          onEmailChange={handleEmailChange}
+          onPasswordChange={handlePasswordChange}
+          onSubmit={isRegistering ? handleRegister : handleLogin}
+          onToggleMode={handleToggleMode}
+          isRegistering={isRegistering}
+          loading={loading}
+        />
       </div>
     </div>
-  );
+  ));
 
-  // Simple Dashboard
-  const Dashboard = () => (
-    <div className="text-center py-8">
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Selamat Datang di FinanceBI!</h2>
-      <p className="text-gray-600">Dashboard sedang dalam pengembangan</p>
-      <button 
-        onClick={async () => {
-          await supabase.auth.signOut();
-          setCurrentUser(null);
-          setCurrentPage('login');
-          setEmail('');
-          setPassword('');
-        }}
-        className="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
-      >
-        Logout
-      </button>
+  // MEMOIZED DASHBOARD COMPONENT
+  const Dashboard = memo(() => (
+    <div className="min-h-screen bg-gray-50">
+      <div className="text-center py-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          Selamat Datang di FinanceBI!
+        </h2>
+        <p className="text-gray-600 mb-4">
+          Email: {currentUser?.email}
+        </p>
+        <p className="text-gray-600 mb-8">
+          Dashboard sedang dalam pengembangan
+        </p>
+        <Button
+          onClick={handleLogout}
+          className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors"
+        >
+          Logout
+        </Button>
+      </div>
     </div>
-  );
+  ));
 
+  // Render logic
   if (currentPage === 'login') {
     return <LoginPage />;
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Dashboard />
-    </div>
-  );
+  return <Dashboard />;
 };
 
 export default FinanceApp;
