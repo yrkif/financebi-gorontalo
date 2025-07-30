@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { PlusCircle, TrendingUp, TrendingDown, DollarSign, Target, User, BarChart3, AlertCircle, CheckCircle, Trophy, Zap, Heart, Briefcase, Home, ShoppingCart, Car, Utensils, Gift, Phone, Book, Gamepad2, Eye, EyeOff, Bell, Shield, Sun, Moon } from 'lucide-react';
+import { PlusCircle, TrendingUp, TrendingDown, DollarSign, Target, User, Settings, BarChart3, PieChart, AlertCircle, CheckCircle, Trophy, Star, Zap, Heart, Briefcase, Home, CreditCard, ShoppingCart, Car, Utensils, Coffee, Gift, Phone, Book, Gamepad2, Plus, Eye, EyeOff, Calendar, Filter, Download, Upload, Bell, Shield, Sun, Moon } from 'lucide-react';
 
 // Supabase configuration
-const supabaseUrl = 'https://6knqq1vsbxq1uwtbtta.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IjZrbnFxMXZzYnhxMXV3dGJ0dGEiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTcxNjc2NzQwNiwiZXhwIjoyMDMyMzQzNDA2fQ.eyjpc3MJjJ1aXZXbXYmZzZSIslnjInlsmVVbJ3UWwYJ8CJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IjZkbnFxMXZzYnhxMXV3dGJ0dGEiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTcxNjc2NzQwNiwiZXhwIjoyMDMyMzQzNDA2fQ.eyjJc3J1aXRrdzXBYmZSZs1njInJslmVVbJ3UWwYJ8CJ';
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function FinanceApp() {
@@ -35,22 +35,6 @@ function FinanceApp() {
     type: 'expense',
     description: '',
     date: new Date().toISOString().split('T')[0]
-  });
-
-  // Budget form
-  const [newBudget, setNewBudget] = useState({
-    category: '',
-    amount: '',
-    period: 'monthly'
-  });
-
-  // Goal form
-  const [newGoal, setNewGoal] = useState({
-    title: '',
-    target_amount: '',
-    current_amount: 0,
-    target_date: '',
-    description: ''
   });
 
   // Categories with Indonesian labels
@@ -224,7 +208,7 @@ function FinanceApp() {
 
       if (error) throw error;
       
-      alert('Registrasi berhasil! Silakan login dengan akun Anda.');
+      alert('Registrasi berhasil! Silakan cek email untuk verifikasi atau login langsung jika email confirmation dimatikan.');
       setIsRegistering(false);
     } catch (error) {
       alert('Register Error: ' + error.message);
@@ -333,119 +317,6 @@ function FinanceApp() {
     }
   }
 
-  // Transaction functions
-  async function handleAddTransaction(e) {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      const { error } = await supabase
-        .from('transactions')
-        .insert({
-          user_id: currentUser.id,
-          amount: parseFloat(newTransaction.amount),
-          category: newTransaction.category,
-          type: newTransaction.type,
-          description: newTransaction.description,
-          date: newTransaction.date
-        });
-
-      if (error) throw error;
-
-      alert('Transaksi berhasil ditambahkan!');
-      setNewTransaction({
-        amount: '',
-        category: '',
-        type: 'expense',
-        description: '',
-        date: new Date().toISOString().split('T')[0]
-      });
-      await loadUserData();
-    } catch (error) {
-      alert('Error: ' + error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // Budget functions
-  async function handleAddBudget(e) {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      const { error } = await supabase
-        .from('budgets')
-        .upsert({
-          user_id: currentUser.id,
-          category: newBudget.category,
-          amount: parseFloat(newBudget.amount),
-          period: newBudget.period
-        });
-
-      if (error) throw error;
-
-      alert('Budget berhasil disimpan!');
-      setNewBudget({ category: '', amount: '', period: 'monthly' });
-      await loadUserData();
-    } catch (error) {
-      alert('Error: ' + error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // Goal functions
-  async function handleAddGoal(e) {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      const { error } = await supabase
-        .from('goals')
-        .insert({
-          user_id: currentUser.id,
-          title: newGoal.title,
-          target_amount: parseFloat(newGoal.target_amount),
-          current_amount: parseFloat(newGoal.current_amount),
-          target_date: newGoal.target_date,
-          description: newGoal.description
-        });
-
-      if (error) throw error;
-
-      alert('Target keuangan berhasil ditambahkan!');
-      setNewGoal({
-        title: '',
-        target_amount: '',
-        current_amount: 0,
-        target_date: '',
-        description: ''
-      });
-      await loadUserData();
-    } catch (error) {
-      alert('Error: ' + error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function updateGoalProgress(goalId, newAmount) {
-    try {
-      const { error } = await supabase
-        .from('goals')
-        .update({ current_amount: parseFloat(newAmount) })
-        .eq('id', goalId);
-
-      if (error) throw error;
-
-      await loadUserData();
-      alert('Progress target berhasil diupdate!');
-    } catch (error) {
-      alert('Error: ' + error.message);
-    }
-  }
-
   // Financial calculations
   function getFinancialStatus() {
     if (!userData) return { overallScore: 0, cashFlow: {}, savings: {}, investment: {}, emergencyMonths: 0 };
@@ -551,8 +422,40 @@ function FinanceApp() {
     return insights;
   }
 
-  const financialStatus = getFinancialStatus();
-  const insights = getSmartInsights();
+  // Transaction functions
+  async function handleAddTransaction(e) {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      const { error } = await supabase
+        .from('transactions')
+        .insert({
+          user_id: currentUser.id,
+          amount: parseFloat(newTransaction.amount),
+          category: newTransaction.category,
+          type: newTransaction.type,
+          description: newTransaction.description,
+          date: newTransaction.date
+        });
+
+      if (error) throw error;
+
+      alert('Transaksi berhasil ditambahkan!');
+      setNewTransaction({
+        amount: '',
+        category: '',
+        type: 'expense',
+        description: '',
+        date: new Date().toISOString().split('T')[0]
+      });
+      await loadUserData();
+    } catch (error) {
+      alert('Error: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // Login Page
   if (currentPage === 'login') {
@@ -576,7 +479,7 @@ function FinanceApp() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="fikry.ma@gmail.com"
+                placeholder="nama@bi-gorontalo.go.id"
                 required
               />
             </div>
@@ -698,6 +601,9 @@ function FinanceApp() {
     );
   }
 
+  const financialStatus = getFinancialStatus();
+  const insights = getSmartInsights();
+
   // Dashboard
   if (currentPage === 'dashboard') {
     return (
@@ -760,12 +666,12 @@ function FinanceApp() {
                 <div className="bg-white/10 rounded-lg p-3">
                   <div className="text-2xl mb-1">{financialStatus.savings.badge}</div>
                   <div className="text-sm text-blue-100">Saving Profile</div>
-                  <div className="font-semibold text-sm">{financialStatus.savings.type}</div>
+                  <div className="font-semibold">{financialStatus.savings.type}</div>
                 </div>
                 <div className="bg-white/10 rounded-lg p-3">
                   <div className="text-2xl mb-1">{financialStatus.investment.rank}</div>
                   <div className="text-sm text-blue-100">Investment</div>
-                  <div className="font-semibold text-sm">{financialStatus.investment.level}</div>
+                  <div className="font-semibold">{financialStatus.investment.level}</div>
                 </div>
                 <div className="bg-white/10 rounded-lg p-3">
                   <div className="text-2xl mb-1">🛡️</div>
@@ -1077,7 +983,7 @@ function FinanceApp() {
     );
   }
 
-  // Placeholder for other pages
+  // Placeholder pages for other features
   const PlaceholderPage = ({ title, icon: Icon, description }) => (
     <div className={`min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`}>
       <header className="bg-white border-b border-gray-200 px-4 py-3">
