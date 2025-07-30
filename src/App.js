@@ -1,10 +1,11 @@
-const { useState, useEffect } = React;
-const { createClient } = supabase;
+import React, { useState, useEffect } from 'react';
+import { createClient } from '@supabase/supabase-js';
+import { PlusCircle, TrendingUp, TrendingDown, DollarSign, Target, User, BarChart3, AlertCircle, CheckCircle, Trophy, Zap, Heart, Briefcase, Home, ShoppingCart, Car, Utensils, Gift, Phone, Book, Gamepad2, Eye, EyeOff, Bell, Shield, Sun, Moon } from 'lucide-react';
 
-// Supabase configuration - Use your actual credentials
+// Supabase configuration
 const supabaseUrl = 'https://6knqq1vsbxq1uwtbtta.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IjZrbnFxMXZzYnhxMXV3dGJ0dGEiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTcxNjc2NzQwNiwiZXhwIjoyMDMyMzQzNDA2fQ.eyjpc3MJjJ1aXZXbXYmZzZSIslnjInlsmVVbJ3UWwYJ8CJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IjZkbnFxMXZzYnhxMXV3dGJ0dGEiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTcxNjc2NzQwNiwiZXhwIjoyMDMyMzQzNDA2fQ.eyjJc3J1aXRrdzXBYmZSZs1njInJslmVVbJ3UWwYJ8CJ'; // Your anon key
-const supabaseClient = createClient(supabaseUrl, supabaseKey);
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IjZrbnFxMXZzYnhxMXV3dGJ0dGEiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTcxNjc2NzQwNiwiZXhwIjoyMDMyMzQzNDA2fQ.eyjpc3MJjJ1aXZXbXYmZzZSIslnjInlsmVVbJ3UWwYJ8CJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IjZkbnFxMXZzYnhxMXV3dGJ0dGEiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTcxNjc2NzQwNiwiZXhwIjoyMDMyMzQzNDA2fQ.eyjJc3J1aXRrdzXBYmZSZs1njInJslmVVbJ3UWwYJ8CJ';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 function FinanceApp() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -55,20 +56,20 @@ function FinanceApp() {
   // Categories with Indonesian labels
   const categories = {
     // Income categories
-    gaji: { name: 'Gaji', icon: 'briefcase', color: 'text-green-600', type: 'income' },
-    bonus: { name: 'Bonus', icon: 'trophy', color: 'text-green-500', type: 'income' },
-    investasi: { name: 'Hasil Investasi', icon: 'trending-up', color: 'text-green-400', type: 'income' },
+    gaji: { name: 'Gaji', icon: Briefcase, color: 'text-green-600', type: 'income' },
+    bonus: { name: 'Bonus', icon: Trophy, color: 'text-green-500', type: 'income' },
+    investasi: { name: 'Hasil Investasi', icon: TrendingUp, color: 'text-green-400', type: 'income' },
     
     // Expense categories
-    makanan: { name: 'Makanan & Minuman', icon: 'utensils', color: 'text-red-500', type: 'expense' },
-    transportasi: { name: 'Transportasi', icon: 'car', color: 'text-blue-500', type: 'expense' },
-    rumah: { name: 'Rumah & Utilities', icon: 'home', color: 'text-purple-500', type: 'expense' },
-    belanja: { name: 'Belanja', icon: 'shopping-cart', color: 'text-pink-500', type: 'expense' },
-    hiburan: { name: 'Hiburan', icon: 'gamepad-2', color: 'text-orange-500', type: 'expense' },
-    kesehatan: { name: 'Kesehatan', icon: 'heart', color: 'text-red-400', type: 'expense' },
-    pendidikan: { name: 'Pendidikan', icon: 'book', color: 'text-indigo-500', type: 'expense' },
-    komunikasi: { name: 'Komunikasi', icon: 'phone', color: 'text-gray-500', type: 'expense' },
-    hadiah: { name: 'Hadiah & Donasi', icon: 'gift', color: 'text-yellow-500', type: 'expense' }
+    makanan: { name: 'Makanan & Minuman', icon: Utensils, color: 'text-red-500', type: 'expense' },
+    transportasi: { name: 'Transportasi', icon: Car, color: 'text-blue-500', type: 'expense' },
+    rumah: { name: 'Rumah & Utilities', icon: Home, color: 'text-purple-500', type: 'expense' },
+    belanja: { name: 'Belanja', icon: ShoppingCart, color: 'text-pink-500', type: 'expense' },
+    hiburan: { name: 'Hiburan', icon: Gamepad2, color: 'text-orange-500', type: 'expense' },
+    kesehatan: { name: 'Kesehatan', icon: Heart, color: 'text-red-400', type: 'expense' },
+    pendidikan: { name: 'Pendidikan', icon: Book, color: 'text-indigo-500', type: 'expense' },
+    komunikasi: { name: 'Komunikasi', icon: Phone, color: 'text-gray-500', type: 'expense' },
+    hadiah: { name: 'Hadiah & Donasi', icon: Gift, color: 'text-yellow-500', type: 'expense' }
   };
 
   // Risk Assessment Questions
@@ -127,17 +128,10 @@ function FinanceApp() {
     }
   }, [currentUser, currentPage]);
 
-  // Initialize Lucide icons
-  useEffect(() => {
-    if (window.lucide) {
-      window.lucide.createIcons();
-    }
-  }, [currentPage]);
-
   async function loadUserData() {
     try {
       // Load user profile
-      const { data: userProfile } = await supabaseClient
+      const { data: userProfile } = await supabase
         .from('users')
         .select('*')
         .eq('id', currentUser.id)
@@ -148,7 +142,7 @@ function FinanceApp() {
       }
 
       // Load transactions
-      const { data: transactionsData } = await supabaseClient
+      const { data: transactionsData } = await supabase
         .from('transactions')
         .select('*')
         .eq('user_id', currentUser.id)
@@ -157,7 +151,7 @@ function FinanceApp() {
       if (transactionsData) setTransactions(transactionsData);
 
       // Load budgets
-      const { data: budgetsData } = await supabaseClient
+      const { data: budgetsData } = await supabase
         .from('budgets')
         .select('*')
         .eq('user_id', currentUser.id);
@@ -171,7 +165,7 @@ function FinanceApp() {
       }
 
       // Load goals
-      const { data: goalsData } = await supabaseClient
+      const { data: goalsData } = await supabase
         .from('goals')
         .select('*')
         .eq('user_id', currentUser.id);
@@ -189,7 +183,7 @@ function FinanceApp() {
     setLoading(true);
     
     try {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
@@ -199,7 +193,7 @@ function FinanceApp() {
       setCurrentUser(data.user);
       
       // Check if user has profile
-      const { data: userProfile } = await supabaseClient
+      const { data: userProfile } = await supabase
         .from('users')
         .select('*')
         .eq('id', data.user.id)
@@ -223,7 +217,7 @@ function FinanceApp() {
     setLoading(true);
     
     try {
-      const { data, error } = await supabaseClient.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
@@ -240,7 +234,7 @@ function FinanceApp() {
   }
 
   async function handleLogout() {
-    await supabaseClient.auth.signOut();
+    await supabase.auth.signOut();
     setCurrentUser(null);
     setCurrentPage('login');
     setUserData(null);
@@ -315,7 +309,7 @@ function FinanceApp() {
 
   async function finishRiskAssessment() {
     try {
-      const { error } = await supabaseClient
+      const { error } = await supabase
         .from('users')
         .insert({
           id: currentUser.id,
@@ -345,7 +339,7 @@ function FinanceApp() {
     setLoading(true);
     
     try {
-      const { error } = await supabaseClient
+      const { error } = await supabase
         .from('transactions')
         .insert({
           user_id: currentUser.id,
@@ -380,7 +374,7 @@ function FinanceApp() {
     setLoading(true);
     
     try {
-      const { error } = await supabaseClient
+      const { error } = await supabase
         .from('budgets')
         .upsert({
           user_id: currentUser.id,
@@ -407,7 +401,7 @@ function FinanceApp() {
     setLoading(true);
     
     try {
-      const { error } = await supabaseClient
+      const { error } = await supabase
         .from('goals')
         .insert({
           user_id: currentUser.id,
@@ -438,7 +432,7 @@ function FinanceApp() {
 
   async function updateGoalProgress(goalId, newAmount) {
     try {
-      const { error } = await supabaseClient
+      const { error } = await supabase
         .from('goals')
         .update({ current_amount: parseFloat(newAmount) })
         .eq('id', goalId);
@@ -517,375 +511,423 @@ function FinanceApp() {
     };
   }
 
-  // Helper function to create icons
-  function createIcon(iconName, className = "h-6 w-6") {
-    return React.createElement('i', { 
-      'data-lucide': iconName, 
-      className: className 
-    });
-  }
+  // Smart Financial Insights
+  function getSmartInsights() {
+    if (!userData) return [];
+    
+    const insights = [];
+    const status = getFinancialStatus();
 
-  // Login Page
-  if (currentPage === 'login') {
-    return React.createElement('div', {
-      className: 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4'
-    }, 
-      React.createElement('div', {
-        className: 'bg-white rounded-2xl shadow-xl p-8 w-full max-w-md'
-      },
-        React.createElement('div', {
-          className: 'text-center mb-8'
-        },
-          React.createElement('div', {
-            className: 'w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4'
-          },
-            createIcon('dollar-sign', 'h-8 w-8 text-white')
-          ),
-          React.createElement('h1', {
-            className: 'text-2xl font-bold text-gray-900'
-          }, 'FinanceBI'),
-          React.createElement('p', {
-            className: 'text-lg text-gray-700'
-          }, currentQuestion.question)
-        ),
-        React.createElement('div', {
-          className: 'space-y-4'
-        }, currentQuestion.options.map((option, index) =>
-          React.createElement('button', {
-            key: index,
-            onClick: () => {
-              handleRiskAnswer(riskAssessmentStep, option);
-              setTimeout(nextRiskStep, 300);
-            },
-            className: 'w-full p-4 text-left border-2 border-gray-200 rounded-xl hover:border-indigo-300 hover:bg-indigo-50 transition-all duration-200 group'
-          },
-            React.createElement('div', {
-              className: 'flex items-center'
-            },
-              React.createElement('div', {
-                className: 'w-6 h-6 border-2 border-gray-300 rounded-full mr-4 group-hover:border-indigo-500'
-              }),
-              React.createElement('span', {
-                className: 'text-gray-700 group-hover:text-indigo-700'
-              }, option.text)
-            )
-          )
-        ))
-      )
-    );
+    if (status.emergencyMonths < 6) {
+      insights.push({
+        type: "urgent",
+        title: "Dana Darurat Belum Optimal",
+        message: `Dana darurat Anda baru ${status.emergencyMonths} bulan pengeluaran. Target minimal 6 bulan. Prioritaskan menabung Rp ${Math.round((userData.monthly_expenses * 6 - userData.emergency_fund) / 12).toLocaleString()}/bulan.`,
+        action: "Buat auto-debit khusus dana darurat",
+        icon: Shield
+      });
+    }
+
+    if (userData.monthly_expenses > userData.monthly_income * 0.8) {
+      insights.push({
+        type: "warning",
+        title: "Rasio Pengeluaran Tinggi",
+        message: `Pengeluaran ${Math.round((userData.monthly_expenses / userData.monthly_income) * 100)}% dari income. Idealnya maksimal 70% untuk financial flexibility.`,
+        action: "Review 3 kategori pengeluaran terbesar",
+        icon: AlertCircle
+      });
+    }
+
+    if (userData.total_investments < userData.monthly_income * 6 && userData.risk_profile !== 'conservative_saver') {
+      insights.push({
+        type: "opportunity",
+        title: "Peluang Investasi Sesuai Profil",
+        message: `Sebagai '${userData.risk_profile?.replace('_', ' ')}', Anda bisa investasi lebih optimal. Pertimbangkan menambah investasi bulanan.`,
+        action: "Jelajahi reksa dana sesuai profil risiko",
+        icon: TrendingUp
+      });
+    }
+
+    return insights;
   }
 
   const financialStatus = getFinancialStatus();
+  const insights = getSmartInsights();
+
+  // Login Page
+  if (currentPage === 'login') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <DollarSign className="h-8 w-8 text-white" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900">FinanceBI</h1>
+            <p className="text-gray-600 mt-2">Personal Finance Management</p>
+            <p className="text-sm text-blue-600 font-medium">Bank Indonesia Gorontalo</p>
+          </div>
+          
+          <form onSubmit={isRegistering ? handleRegister : handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="fikry.ma@gmail.com"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <input 
+                type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <button 
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            >
+              {loading ? 'Loading...' : (isRegistering ? 'Daftar' : 'Masuk')}
+            </button>
+            <button 
+              type="button"
+              onClick={toggleAuthMode}
+              className="w-full border border-blue-600 text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+            >
+              {isRegistering ? 'Sudah punya akun? Masuk' : 'Belum punya akun? Daftar'}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // Risk Assessment Page
+  if (currentPage === 'risk-assessment') {
+    if (riskProfile) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl">
+            <div className="text-center mb-8">
+              <div className="text-6xl mb-4">{riskProfile.icon}</div>
+              <h2 className="text-3xl font-bold text-gray-900">{riskProfile.type}</h2>
+              <p className={`text-xl ${riskProfile.color} font-semibold mt-2`}>{riskProfile.description}</p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Karakteristik Anda:</h3>
+                <ul className="space-y-2">
+                  {riskProfile.characteristics.map((char, index) => (
+                    <li key={index} className="flex items-center text-gray-700">
+                      <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
+                      {char}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Rekomendasi Investasi:</h3>
+                <p className="text-gray-700 bg-gray-50 p-4 rounded-lg">{riskProfile.recommendation}</p>
+              </div>
+
+              <button 
+                onClick={finishRiskAssessment}
+                className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+              >
+                Mulai Kelola Keuangan Saya
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const currentQuestion = riskQuestions[riskAssessmentStep];
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl">
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-sm font-medium text-indigo-600">Langkah {riskAssessmentStep} dari 5</span>
+              <span className="text-sm text-gray-500">{Math.round((riskAssessmentStep / 5) * 100)}% selesai</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div 
+                className="bg-indigo-600 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${(riskAssessmentStep / 5) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{currentQuestion.title}</h2>
+            <p className="text-lg text-gray-700">{currentQuestion.question}</p>
+          </div>
+
+          <div className="space-y-4">
+            {currentQuestion.options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  handleRiskAnswer(riskAssessmentStep, option);
+                  setTimeout(nextRiskStep, 300);
+                }}
+                className="w-full p-4 text-left border-2 border-gray-200 rounded-xl hover:border-indigo-300 hover:bg-indigo-50 transition-all duration-200 group"
+              >
+                <div className="flex items-center">
+                  <div className="w-6 h-6 border-2 border-gray-300 rounded-full mr-4 group-hover:border-indigo-500"></div>
+                  <span className="text-gray-700 group-hover:text-indigo-700">{option.text}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Dashboard
   if (currentPage === 'dashboard') {
-    return React.createElement('div', {
-      className: `min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`
-    },
-      // Header
-      React.createElement('header', {
-        className: 'bg-white border-b border-gray-200 px-4 py-3'
-      },
-        React.createElement('div', {
-          className: 'flex items-center justify-between'
-        },
-          React.createElement('div', {
-            className: 'flex items-center'
-          },
-            React.createElement('div', {
-              className: 'w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3'
-            },
-              createIcon('dollar-sign', 'h-5 w-5 text-white')
-            ),
-            React.createElement('div', {},
-              React.createElement('h1', {
-                className: 'text-lg font-bold text-gray-900'
-              }, 'FinanceBI'),
-              React.createElement('p', {
-                className: 'text-xs text-gray-500'
-              }, 'Bank Indonesia Gorontalo')
-            )
-          ),
-          React.createElement('div', {
-            className: 'flex items-center space-x-3'
-          },
-            React.createElement('button', {
-              onClick: () => setDarkMode(!darkMode),
-              className: 'p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors'
-            },
-              createIcon(darkMode ? 'sun' : 'moon', 'h-5 w-5')
-            ),
-            React.createElement('button', {
-              onClick: handleLogout,
-              className: 'flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors'
-            },
-              createIcon('user', 'h-5 w-5')
-            )
-          )
-        )
-      ),
+    return (
+      <div className={`min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`}>
+        {/* Header */}
+        <header className="bg-white border-b border-gray-200 px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                <DollarSign className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-gray-900">FinanceBI</h1>
+                <p className="text-xs text-gray-500">Bank Indonesia Gorontalo</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <button 
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
+              <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors relative">
+                <Bell className="h-5 w-5" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <User className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        </header>
 
-      // Main Content
-      React.createElement('main', {
-        className: 'pb-20 pt-6 px-4'
-      },
-        React.createElement('div', {
-          className: 'space-y-6'
-        },
-          // Financial Health Overview
-          React.createElement('div', {
-            className: 'bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-white'
-          },
-            React.createElement('div', {
-              className: 'flex justify-between items-start mb-4'
-            },
-              React.createElement('div', {},
-                React.createElement('h2', {
-                  className: 'text-2xl font-bold'
-                }, `Halo, ${userData?.name || 'User'}! 👋`),
-                React.createElement('p', {
-                  className: 'text-blue-100'
-                }, 'Selamat datang di dashboard keuangan Anda')
-              ),
-              React.createElement('div', {
-                className: 'text-right'
-              },
-                React.createElement('div', {
-                  className: 'text-3xl font-bold'
-                }, `${financialStatus.overallScore}/100`),
-                React.createElement('div', {
-                  className: 'text-blue-100'
-                }, 'Skor Kesehatan')
-              )
-            ),
-            React.createElement('div', {
-              className: 'grid grid-cols-2 md:grid-cols-4 gap-4 mt-6'
-            },
-              React.createElement('div', {
-                className: 'bg-white/10 rounded-lg p-3'
-              },
-                React.createElement('div', {
-                  className: 'text-2xl mb-1'
-                }, financialStatus.cashFlow.icon),
-                React.createElement('div', {
-                  className: 'text-sm text-blue-100'
-                }, 'Cash Flow'),
-                React.createElement('div', {
-                  className: 'font-semibold'
-                }, financialStatus.cashFlow.status)
-              ),
-              React.createElement('div', {
-                className: 'bg-white/10 rounded-lg p-3'
-              },
-                React.createElement('div', {
-                  className: 'text-2xl mb-1'
-                }, financialStatus.savings.badge),
-                React.createElement('div', {
-                  className: 'text-sm text-blue-100'
-                }, 'Saving Profile'),
-                React.createElement('div', {
-                  className: 'font-semibold text-sm'
-                }, financialStatus.savings.type)
-              ),
-              React.createElement('div', {
-                className: 'bg-white/10 rounded-lg p-3'
-              },
-                React.createElement('div', {
-                  className: 'text-2xl mb-1'
-                }, financialStatus.investment.rank),
-                React.createElement('div', {
-                  className: 'text-sm text-blue-100'
-                }, 'Investment'),
-                React.createElement('div', {
-                  className: 'font-semibold text-sm'
-                }, financialStatus.investment.level)
-              ),
-              React.createElement('div', {
-                className: 'bg-white/10 rounded-lg p-3'
-              },
-                React.createElement('div', {
-                  className: 'text-2xl mb-1'
-                }, '🛡️'),
-                React.createElement('div', {
-                  className: 'text-sm text-blue-100'
-                }, 'Emergency Fund'),
-                React.createElement('div', {
-                  className: 'font-semibold'
-                }, `${financialStatus.emergencyMonths} bulan`)
-              )
-            )
-          ),
+        <main className="pb-20 pt-6 px-4">
+          <div className="space-y-6">
+            {/* Financial Health Overview */}
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-white">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h2 className="text-2xl font-bold">Halo, {userData?.name || 'User'}! 👋</h2>
+                  <p className="text-blue-100">Selamat datang di dashboard keuangan Anda</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold">{financialStatus.overallScore}/100</div>
+                  <div className="text-blue-100">Skor Kesehatan</div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="text-2xl mb-1">{financialStatus.cashFlow.icon}</div>
+                  <div className="text-sm text-blue-100">Cash Flow</div>
+                  <div className="font-semibold">{financialStatus.cashFlow.status}</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="text-2xl mb-1">{financialStatus.savings.badge}</div>
+                  <div className="text-sm text-blue-100">Saving Profile</div>
+                  <div className="font-semibold text-sm">{financialStatus.savings.type}</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="text-2xl mb-1">{financialStatus.investment.rank}</div>
+                  <div className="text-sm text-blue-100">Investment</div>
+                  <div className="font-semibold text-sm">{financialStatus.investment.level}</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="text-2xl mb-1">🛡️</div>
+                  <div className="text-sm text-blue-100">Emergency Fund</div>
+                  <div className="font-semibold">{financialStatus.emergencyMonths} bulan</div>
+                </div>
+              </div>
+            </div>
 
-          // Financial Summary Cards
-          React.createElement('div', {
-            className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'
-          },
-            React.createElement('div', {
-              className: 'bg-white rounded-2xl p-6 shadow-sm'
-            },
-              React.createElement('div', {
-                className: 'flex items-center justify-between mb-4'
-              },
-                React.createElement('div', {
-                  className: 'p-2 bg-green-100 rounded-lg'
-                },
-                  createIcon('trending-up', 'h-6 w-6 text-green-600')
-                ),
-                React.createElement('button', {
-                  onClick: () => setShowBalance(!showBalance)
-                },
-                  createIcon(showBalance ? 'eye' : 'eye-off', 'h-5 w-5 text-gray-400')
-                )
-              ),
-              React.createElement('div', {
-                className: 'text-2xl font-bold text-gray-900'
-              }, showBalance ? `Rp ${userData?.monthly_income?.toLocaleString() || '0'}` : '••••••••'),
-              React.createElement('div', {
-                className: 'text-gray-600 text-sm'
-              }, 'Pendapatan Bulanan')
-            ),
-            React.createElement('div', {
-              className: 'bg-white rounded-2xl p-6 shadow-sm'
-            },
-              React.createElement('div', {
-                className: 'flex items-center justify-between mb-4'
-              },
-                React.createElement('div', {
-                  className: 'p-2 bg-red-100 rounded-lg'
-                },
-                  createIcon('trending-down', 'h-6 w-6 text-red-600')
-                )
-              ),
-              React.createElement('div', {
-                className: 'text-2xl font-bold text-gray-900'
-              }, showBalance ? `Rp ${userData?.monthly_expenses?.toLocaleString() || '0'}` : '••••••••'),
-              React.createElement('div', {
-                className: 'text-gray-600 text-sm'
-              }, 'Pengeluaran Bulanan')
-            ),
-            React.createElement('div', {
-              className: 'bg-white rounded-2xl p-6 shadow-sm'
-            },
-              React.createElement('div', {
-                className: 'flex items-center justify-between mb-4'
-              },
-                React.createElement('div', {
-                  className: 'p-2 bg-blue-100 rounded-lg'
-                },
-                  createIcon('dollar-sign', 'h-6 w-6 text-blue-600')
-                )
-              ),
-              React.createElement('div', {
-                className: 'text-2xl font-bold text-gray-900'
-              }, showBalance ? `Rp ${userData?.total_savings?.toLocaleString() || '0'}` : '••••••••'),
-              React.createElement('div', {
-                className: 'text-gray-600 text-sm'
-              }, 'Total Tabungan')
-            ),
-            React.createElement('div', {
-              className: 'bg-white rounded-2xl p-6 shadow-sm'
-            },
-              React.createElement('div', {
-                className: 'flex items-center justify-between mb-4'
-              },
-                React.createElement('div', {
-                  className: 'p-2 bg-purple-100 rounded-lg'
-                },
-                  createIcon('bar-chart-3', 'h-6 w-6 text-purple-600')
-                )
-              ),
-              React.createElement('div', {
-                className: 'text-2xl font-bold text-gray-900'
-              }, showBalance ? `Rp ${userData?.total_investments?.toLocaleString() || '0'}` : '••••••••'),
-              React.createElement('div', {
-                className: 'text-gray-600 text-sm'
-              }, 'Total Investasi')
-            )
-          ),
+            {/* Smart Insights */}
+            {insights.length > 0 && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                  <Zap className="h-6 w-6 text-yellow-500 mr-2" />
+                  Insight Pintar Untuk Anda
+                </h3>
+                <div className="space-y-4">
+                  {insights.map((insight, index) => (
+                    <div key={index} className={`border-l-4 pl-4 py-3 rounded-r-lg bg-gray-50 ${
+                      insight.type === 'urgent' ? 'border-red-500' : 
+                      insight.type === 'warning' ? 'border-yellow-500' : 'border-green-500'
+                    }`}>
+                      <div className="flex items-start">
+                        <insight.icon className={`h-5 w-5 mr-3 mt-0.5 ${
+                          insight.type === 'urgent' ? 'text-red-500' : 
+                          insight.type === 'warning' ? 'text-yellow-500' : 'text-green-500'
+                        }`} />
+                        <div>
+                          <h4 className="font-semibold text-gray-900">{insight.title}</h4>
+                          <p className="text-gray-700 text-sm mt-1">{insight.message}</p>
+                          <button className="text-blue-600 text-sm font-medium mt-2 hover:text-blue-700">
+                            {insight.action} →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-          // Quick Actions
-          React.createElement('div', {
-            className: 'bg-white rounded-2xl p-6 shadow-sm'
-          },
-            React.createElement('h3', {
-              className: 'text-xl font-bold text-gray-900 mb-4'
-            }, 'Aksi Cepat'),
-            React.createElement('div', {
-              className: 'grid grid-cols-2 md:grid-cols-4 gap-4'
-            },
-              React.createElement('button', {
-                onClick: () => setCurrentPage('add-transaction'),
-                className: 'flex flex-col items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors'
-              },
-                createIcon('plus-circle', 'h-8 w-8 text-blue-600 mb-2'),
-                React.createElement('span', {
-                  className: 'text-sm font-medium text-blue-600'
-                }, 'Tambah Transaksi')
-              ),
-              React.createElement('button', {
-                onClick: () => setCurrentPage('budget'),
-                className: 'flex flex-col items-center p-4 bg-green-50 rounded-xl hover:bg-green-100 transition-colors'
-              },
-                createIcon('target', 'h-8 w-8 text-green-600 mb-2'),
-                React.createElement('span', {
-                  className: 'text-sm font-medium text-green-600'
-                }, 'Atur Budget')
-              ),
-              React.createElement('button', {
-                onClick: () => setCurrentPage('goals'),
-                className: 'flex flex-col items-center p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors'
-              },
-                createIcon('trophy', 'h-8 w-8 text-purple-600 mb-2'),
-                React.createElement('span', {
-                  className: 'text-sm font-medium text-purple-600'
-                }, 'Target Keuangan')
-              ),
-              React.createElement('button', {
-                onClick: () => setCurrentPage('reports'),
-                className: 'flex flex-col items-center p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors'
-              },
-                createIcon('bar-chart-3', 'h-8 w-8 text-orange-600 mb-2'),
-                React.createElement('span', {
-                  className: 'text-sm font-medium text-orange-600'
-                }, 'Laporan')
-              )
-            )
-          )
-        )
-      ),
+            {/* Financial Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-green-100 rounded-lg">
+                    <TrendingUp className="h-6 w-6 text-green-600" />
+                  </div>
+                  <button onClick={() => setShowBalance(!showBalance)}>
+                    {showBalance ? <Eye className="h-5 w-5 text-gray-400" /> : <EyeOff className="h-5 w-5 text-gray-400" />}
+                  </button>
+                </div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {showBalance ? `Rp ${userData?.monthly_income?.toLocaleString() || '0'}` : '••••••••'}
+                </div>
+                <div className="text-gray-600 text-sm">Pendapatan Bulanan</div>
+              </div>
 
-      // Bottom Navigation
-      React.createElement('nav', {
-        className: 'fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2'
-      },
-        React.createElement('div', {
-          className: 'flex justify-around'
-        },
-          [
-            { id: 'dashboard', icon: 'home', label: 'Beranda' },
-            { id: 'add-transaction', icon: 'plus-circle', label: 'Tambah' },
-            { id: 'budget', icon: 'target', label: 'Budget' },
-            { id: 'goals', icon: 'trophy', label: 'Target' },
-            { id: 'reports', icon: 'bar-chart-3', label: 'Laporan' }
-          ].map((item) => {
-            const isActive = currentPage === item.id;
-            return React.createElement('button', {
-              key: item.id,
-              onClick: () => setCurrentPage(item.id),
-              className: `flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${
-                isActive 
-                  ? 'text-blue-600 bg-blue-50' 
-                  : 'text-gray-600 hover:text-gray-900'
-              }`
-            },
-              createIcon(item.icon, 'h-6 w-6 mb-1'),
-              React.createElement('span', {
-                className: 'text-xs font-medium'
-              }, item.label)
-            );
-          })
-        )
-      )
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-red-100 rounded-lg">
+                    <TrendingDown className="h-6 w-6 text-red-600" />
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {showBalance ? `Rp ${userData?.monthly_expenses?.toLocaleString() || '0'}` : '••••••••'}
+                </div>
+                <div className="text-gray-600 text-sm">Pengeluaran Bulanan</div>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-blue-100 rounded-lg">
+                    <DollarSign className="h-6 w-6 text-blue-600" />
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {showBalance ? `Rp ${userData?.total_savings?.toLocaleString() || '0'}` : '••••••••'}
+                </div>
+                <div className="text-gray-600 text-sm">Total Tabungan</div>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <BarChart3 className="h-6 w-6 text-purple-600" />
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {showBalance ? `Rp ${userData?.total_investments?.toLocaleString() || '0'}` : '••••••••'}
+                </div>
+                <div className="text-gray-600 text-sm">Total Investasi</div>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Aksi Cepat</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button 
+                  onClick={() => setCurrentPage('add-transaction')}
+                  className="flex flex-col items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors"
+                >
+                  <PlusCircle className="h-8 w-8 text-blue-600 mb-2" />
+                  <span className="text-sm font-medium text-blue-600">Tambah Transaksi</span>
+                </button>
+                <button 
+                  onClick={() => setCurrentPage('budget')}
+                  className="flex flex-col items-center p-4 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
+                >
+                  <Target className="h-8 w-8 text-green-600 mb-2" />
+                  <span className="text-sm font-medium text-green-600">Atur Budget</span>
+                </button>
+                <button 
+                  onClick={() => setCurrentPage('goals')}
+                  className="flex flex-col items-center p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors"
+                >
+                  <Trophy className="h-8 w-8 text-purple-600 mb-2" />
+                  <span className="text-sm font-medium text-purple-600">Target Keuangan</span>
+                </button>
+                <button 
+                  onClick={() => setCurrentPage('reports')}
+                  className="flex flex-col items-center p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors"
+                >
+                  <BarChart3 className="h-8 w-8 text-orange-600 mb-2" />
+                  <span className="text-sm font-medium text-orange-600">Laporan</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        {/* Bottom Navigation */}
+        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+          <div className="flex justify-around">
+            {[
+              { id: 'dashboard', icon: Home, label: 'Beranda' },
+              { id: 'add-transaction', icon: PlusCircle, label: 'Tambah' },
+              { id: 'budget', icon: Target, label: 'Budget' },
+              { id: 'goals', icon: Trophy, label: 'Target' },
+              { id: 'reports', icon: BarChart3, label: 'Laporan' }
+            ].map((item) => {
+              const Icon = item.icon;
+              const isActive = currentPage === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setCurrentPage(item.id)}
+                  className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${
+                    isActive 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <Icon className="h-6 w-6 mb-1" />
+                  <span className="text-xs font-medium">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+      </div>
     );
   }
 
@@ -895,917 +937,191 @@ function FinanceApp() {
     const incomeCategories = Object.entries(categories).filter(([_, cat]) => cat.type === 'income');
     const currentCategories = newTransaction.type === 'expense' ? expenseCategories : incomeCategories;
 
-    return React.createElement('div', {
-      className: `min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`
-    },
-      React.createElement('header', {
-        className: 'bg-white border-b border-gray-200 px-4 py-3'
-      },
-        React.createElement('div', {
-          className: 'flex items-center justify-between'
-        },
-          React.createElement('button', {
-            onClick: () => setCurrentPage('dashboard'),
-            className: 'p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors'
-          }, '← Kembali'),
-          React.createElement('h1', {
-            className: 'text-lg font-bold text-gray-900'
-          }, 'Tambah Transaksi'),
-          React.createElement('div', {})
-        )
-      ),
-      React.createElement('main', {
-        className: 'pt-6 px-4 pb-20'
-      },
-        React.createElement('div', {
-          className: 'max-w-2xl mx-auto'
-        },
-          React.createElement('div', {
-            className: 'bg-white rounded-2xl p-6 shadow-sm'
-          },
-            React.createElement('form', {
-              onSubmit: handleAddTransaction,
-              className: 'space-y-6'
-            },
-              // Transaction Type
-              React.createElement('div', {},
-                React.createElement('label', {
-                  className: 'block text-sm font-medium text-gray-700 mb-3'
-                }, 'Jenis Transaksi'),
-                React.createElement('div', {
-                  className: 'flex space-x-4'
-                },
-                  React.createElement('button', {
-                    type: 'button',
-                    onClick: () => setNewTransaction(prev => ({ ...prev, type: 'expense', category: '' })),
-                    className: `flex-1 p-4 rounded-xl border-2 transition-colors ${
-                      newTransaction.type === 'expense' 
-                        ? 'border-red-500 bg-red-50 text-red-700' 
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`
-                  },
-                    createIcon('trending-down', 'h-6 w-6 mx-auto mb-2'),
-                    React.createElement('div', {
-                      className: 'font-medium'
-                    }, 'Pengeluaran')
-                  ),
-                  React.createElement('button', {
-                    type: 'button',
-                    onClick: () => setNewTransaction(prev => ({ ...prev, type: 'income', category: '' })),
-                    className: `flex-1 p-4 rounded-xl border-2 transition-colors ${
-                      newTransaction.type === 'income' 
-                        ? 'border-green-500 bg-green-50 text-green-700' 
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`
-                  },
-                    createIcon('trending-up', 'h-6 w-6 mx-auto mb-2'),
-                    React.createElement('div', {
-                      className: 'font-medium'
-                    }, 'Pemasukan')
-                  )
-                )
-              ),
+    return (
+      <div className={`min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`}>
+        <header className="bg-white border-b border-gray-200 px-4 py-3">
+          <div className="flex items-center justify-between">
+            <button 
+              onClick={() => setCurrentPage('dashboard')}
+              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              ← Kembali
+            </button>
+            <h1 className="text-lg font-bold text-gray-900">Tambah Transaksi</h1>
+            <div></div>
+          </div>
+        </header>
 
-              // Amount
-              React.createElement('div', {},
-                React.createElement('label', {
-                  className: 'block text-sm font-medium text-gray-700 mb-2'
-                }, 'Jumlah'),
-                React.createElement('div', {
-                  className: 'relative'
-                },
-                  React.createElement('span', {
-                    className: 'absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500'
-                  }, 'Rp'),
-                  React.createElement('input', {
-                    type: 'number',
-                    value: newTransaction.amount,
-                    onChange: (e) => setNewTransaction(prev => ({ ...prev, amount: e.target.value })),
-                    className: 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    placeholder: '0',
-                    required: true
-                  })
-                )
-              ),
+        <main className="pt-6 px-4 pb-20">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <form onSubmit={handleAddTransaction} className="space-y-6">
+                {/* Transaction Type */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Jenis Transaksi</label>
+                  <div className="flex space-x-4">
+                    <button
+                      type="button"
+                      onClick={() => setNewTransaction(prev => ({ ...prev, type: 'expense', category: '' }))}
+                      className={`flex-1 p-4 rounded-xl border-2 transition-colors ${
+                        newTransaction.type === 'expense' 
+                          ? 'border-red-500 bg-red-50 text-red-700' 
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <TrendingDown className="h-6 w-6 mx-auto mb-2" />
+                      <div className="font-medium">Pengeluaran</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewTransaction(prev => ({ ...prev, type: 'income', category: '' }))}
+                      className={`flex-1 p-4 rounded-xl border-2 transition-colors ${
+                        newTransaction.type === 'income' 
+                          ? 'border-green-500 bg-green-50 text-green-700' 
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <TrendingUp className="h-6 w-6 mx-auto mb-2" />
+                      <div className="font-medium">Pemasukan</div>
+                    </button>
+                  </div>
+                </div>
 
-              // Category
-              React.createElement('div', {},
-                React.createElement('label', {
-                  className: 'block text-sm font-medium text-gray-700 mb-3'
-                }, 'Kategori'),
-                React.createElement('div', {
-                  className: 'grid grid-cols-2 md:grid-cols-3 gap-3'
-                }, currentCategories.map(([key, category]) =>
-                  React.createElement('button', {
-                    key: key,
-                    type: 'button',
-                    onClick: () => setNewTransaction(prev => ({ ...prev, category: key })),
-                    className: `p-4 rounded-xl border-2 transition-colors text-left ${
-                      newTransaction.category === key
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`
-                  },
-                    createIcon(category.icon, `h-6 w-6 ${category.color} mb-2`),
-                    React.createElement('div', {
-                      className: 'font-medium text-gray-900 text-sm'
-                    }, category.name)
-                  )
-                ))
-              ),
+                {/* Amount */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Jumlah</label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">Rp</span>
+                    <input
+                      type="number"
+                      value={newTransaction.amount}
+                      onChange={(e) => setNewTransaction(prev => ({ ...prev, amount: e.target.value }))}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="0"
+                      required
+                    />
+                  </div>
+                </div>
 
-              // Description
-              React.createElement('div', {},
-                React.createElement('label', {
-                  className: 'block text-sm font-medium text-gray-700 mb-2'
-                }, 'Keterangan (Opsional)'),
-                React.createElement('input', {
-                  type: 'text',
-                  value: newTransaction.description,
-                  onChange: (e) => setNewTransaction(prev => ({ ...prev, description: e.target.value })),
-                  className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                  placeholder: 'Contoh: Makan siang di kantin'
-                })
-              ),
-
-              // Date
-              React.createElement('div', {},
-                React.createElement('label', {
-                  className: 'block text-sm font-medium text-gray-700 mb-2'
-                }, 'Tanggal'),
-                React.createElement('input', {
-                  type: 'date',
-                  value: newTransaction.date,
-                  onChange: (e) => setNewTransaction(prev => ({ ...prev, date: e.target.value })),
-                  className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                  required: true
-                })
-              ),
-
-              // Submit Button
-              React.createElement('div', {
-                className: 'flex space-x-4'
-              },
-                React.createElement('button', {
-                  type: 'submit',
-                  disabled: !newTransaction.amount || !newTransaction.category || loading,
-                  className: 'flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
-                }, loading ? 'Menyimpan...' : 'Simpan Transaksi'),
-                React.createElement('button', {
-                  type: 'button',
-                  onClick: () => setCurrentPage('dashboard'),
-                  className: 'px-6 py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors'
-                }, 'Batal')
-              )
-            )
-          )
-        )
-      )
-    );
-  }
-
-  // Budget Management Page
-  if (currentPage === 'budget') {
-    const expenseCategories = Object.entries(categories).filter(([_, cat]) => cat.type === 'expense');
-    
-    return React.createElement('div', {
-      className: `min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`
-    },
-      React.createElement('header', {
-        className: 'bg-white border-b border-gray-200 px-4 py-3'
-      },
-        React.createElement('div', {
-          className: 'flex items-center justify-between'
-        },
-          React.createElement('button', {
-            onClick: () => setCurrentPage('dashboard'),
-            className: 'p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors'
-          }, '← Kembali'),
-          React.createElement('h1', {
-            className: 'text-lg font-bold text-gray-900'
-          }, 'Budget Management'),
-          React.createElement('div', {})
-        )
-      ),
-      React.createElement('main', {
-        className: 'pt-6 px-4 pb-20'
-      },
-        React.createElement('div', {
-          className: 'max-w-4xl mx-auto space-y-6'
-        },
-          // Add Budget Form
-          React.createElement('div', {
-            className: 'bg-white rounded-2xl p-6 shadow-sm'
-          },
-            React.createElement('h3', {
-              className: 'text-xl font-bold text-gray-900 mb-4'
-            }, 'Tambah Budget Baru'),
-            React.createElement('form', {
-              onSubmit: handleAddBudget,
-              className: 'space-y-4'
-            },
-              React.createElement('div', {
-                className: 'grid grid-cols-1 md:grid-cols-3 gap-4'
-              },
-                React.createElement('div', {},
-                  React.createElement('label', {
-                    className: 'block text-sm font-medium text-gray-700 mb-2'
-                  }, 'Kategori'),
-                  React.createElement('select', {
-                    value: newBudget.category,
-                    onChange: (e) => setNewBudget(prev => ({ ...prev, category: e.target.value })),
-                    className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    required: true
-                  },
-                    React.createElement('option', { value: '' }, 'Pilih Kategori'),
-                    expenseCategories.map(([key, category]) =>
-                      React.createElement('option', { key: key, value: key }, category.name)
-                    )
-                  )
-                ),
-                React.createElement('div', {},
-                  React.createElement('label', {
-                    className: 'block text-sm font-medium text-gray-700 mb-2'
-                  }, 'Jumlah Budget'),
-                  React.createElement('input', {
-                    type: 'number',
-                    value: newBudget.amount,
-                    onChange: (e) => setNewBudget(prev => ({ ...prev, amount: e.target.value })),
-                    className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    placeholder: 'Rp 0',
-                    required: true
-                  })
-                ),
-                React.createElement('div', {},
-                  React.createElement('label', {
-                    className: 'block text-sm font-medium text-gray-700 mb-2'
-                  }, 'Periode'),
-                  React.createElement('select', {
-                    value: newBudget.period,
-                    onChange: (e) => setNewBudget(prev => ({ ...prev, period: e.target.value })),
-                    className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                  },
-                    React.createElement('option', { value: 'monthly' }, 'Bulanan'),
-                    React.createElement('option', { value: 'weekly' }, 'Mingguan'),
-                    React.createElement('option', { value: 'yearly' }, 'Tahunan')
-                  )
-                )
-              ),
-              React.createElement('button', {
-                type: 'submit',
-                disabled: !newBudget.category || !newBudget.amount || loading,
-                className: 'w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 disabled:opacity-50 transition-colors'
-              }, loading ? 'Menyimpan...' : 'Simpan Budget')
-            )
-          ),
-
-          // Current Budgets
-          React.createElement('div', {
-            className: 'bg-white rounded-2xl p-6 shadow-sm'
-          },
-            React.createElement('h3', {
-              className: 'text-xl font-bold text-gray-900 mb-4'
-            }, 'Budget Saat Ini'),
-            React.createElement('div', {
-              className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
-            },
-              Object.entries(budgets).length === 0 
-                ? React.createElement('p', {
-                    className: 'text-gray-500 col-span-full text-center py-8'
-                  }, 'Belum ada budget yang ditetapkan. Tambahkan budget pertama Anda!')
-                : Object.entries(budgets).map(([category, amount]) => {
-                    const categoryInfo = categories[category];
-                    const spent = transactions
-                      .filter(t => t.category === category && t.type === 'expense')
-                      .reduce((sum, t) => sum + t.amount, 0);
-                    const percentage = (spent / amount) * 100;
-                    
-                    return React.createElement('div', {
-                      key: category,
-                      className: 'border border-gray-200 rounded-lg p-4'
-                    },
-                      React.createElement('div', {
-                        className: 'flex items-center mb-3'
-                      },
-                        createIcon(categoryInfo?.icon || 'circle', `h-5 w-5 ${categoryInfo?.color || 'text-gray-500'} mr-2`),
-                        React.createElement('h4', {
-                          className: 'font-semibold text-gray-900'
-                        }, categoryInfo?.name || category)
-                      ),
-                      React.createElement('div', {
-                        className: 'space-y-2'
-                      },
-                        React.createElement('div', {
-                          className: 'flex justify-between text-sm'
-                        },
-                          React.createElement('span', {}, `Terpakai: Rp ${spent.toLocaleString()}`),
-                          React.createElement('span', {}, `Budget: Rp ${amount.toLocaleString()}`)
-                        ),
-                        React.createElement('div', {
-                          className: 'w-full bg-gray-200 rounded-full h-2'
-                        },
-                          React.createElement('div', {
-                            className: `h-2 rounded-full transition-all ${percentage > 100 ? 'bg-red-500' : percentage > 80 ? 'bg-yellow-500' : 'bg-green-500'}`,
-                            style: { width: `${Math.min(percentage, 100)}%` }
-                          })
-                        ),
-                        React.createElement('div', {
-                          className: `text-xs font-medium ${percentage > 100 ? 'text-red-600' : percentage > 80 ? 'text-yellow-600' : 'text-green-600'}`
-                        }, `${percentage.toFixed(1)}% terpakai`)
-                      )
-                    );
-                  })
-            )
-          )
-        )
-      )
-    );
-  }
-
-  // Goals Management Page
-  if (currentPage === 'goals') {
-    return React.createElement('div', {
-      className: `min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`
-    },
-      React.createElement('header', {
-        className: 'bg-white border-b border-gray-200 px-4 py-3'
-      },
-        React.createElement('div', {
-          className: 'flex items-center justify-between'
-        },
-          React.createElement('button', {
-            onClick: () => setCurrentPage('dashboard'),
-            className: 'p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors'
-          }, '← Kembali'),
-          React.createElement('h1', {
-            className: 'text-lg font-bold text-gray-900'
-          }, 'Target Keuangan'),
-          React.createElement('div', {})
-        )
-      ),
-      React.createElement('main', {
-        className: 'pt-6 px-4 pb-20'
-      },
-        React.createElement('div', {
-          className: 'max-w-4xl mx-auto space-y-6'
-        },
-          // Add Goal Form
-          React.createElement('div', {
-            className: 'bg-white rounded-2xl p-6 shadow-sm'
-          },
-            React.createElement('h3', {
-              className: 'text-xl font-bold text-gray-900 mb-4'
-            }, 'Tambah Target Baru'),
-            React.createElement('form', {
-              onSubmit: handleAddGoal,
-              className: 'space-y-4'
-            },
-              React.createElement('div', {
-                className: 'grid grid-cols-1 md:grid-cols-2 gap-4'
-              },
-                React.createElement('div', {},
-                  React.createElement('label', {
-                    className: 'block text-sm font-medium text-gray-700 mb-2'
-                  }, 'Nama Target'),
-                  React.createElement('input', {
-                    type: 'text',
-                    value: newGoal.title,
-                    onChange: (e) => setNewGoal(prev => ({ ...prev, title: e.target.value })),
-                    className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    placeholder: 'Contoh: Liburan ke Bali',
-                    required: true
-                  })
-                ),
-                React.createElement('div', {},
-                  React.createElement('label', {
-                    className: 'block text-sm font-medium text-gray-700 mb-2'
-                  }, 'Target Jumlah'),
-                  React.createElement('input', {
-                    type: 'number',
-                    value: newGoal.target_amount,
-                    onChange: (e) => setNewGoal(prev => ({ ...prev, target_amount: e.target.value })),
-                    className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    placeholder: 'Rp 0',
-                    required: true
-                  })
-                ),
-                React.createElement('div', {},
-                  React.createElement('label', {
-                    className: 'block text-sm font-medium text-gray-700 mb-2'
-                  }, 'Jumlah Saat Ini'),
-                  React.createElement('input', {
-                    type: 'number',
-                    value: newGoal.current_amount,
-                    onChange: (e) => setNewGoal(prev => ({ ...prev, current_amount: e.target.value })),
-                    className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    placeholder: 'Rp 0'
-                  })
-                ),
-                React.createElement('div', {},
-                  React.createElement('label', {
-                    className: 'block text-sm font-medium text-gray-700 mb-2'
-                  }, 'Target Tanggal'),
-                  React.createElement('input', {
-                    type: 'date',
-                    value: newGoal.target_date,
-                    onChange: (e) => setNewGoal(prev => ({ ...prev, target_date: e.target.value })),
-                    className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                    required: true
-                  })
-                )
-              ),
-              React.createElement('div', {},
-                React.createElement('label', {
-                  className: 'block text-sm font-medium text-gray-700 mb-2'
-                }, 'Deskripsi (Opsional)'),
-                React.createElement('textarea', {
-                  value: newGoal.description,
-                  onChange: (e) => setNewGoal(prev => ({ ...prev, description: e.target.value })),
-                  className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-                  placeholder: 'Jelaskan detail target Anda...',
-                  rows: 3
-                })
-              ),
-              React.createElement('button', {
-                type: 'submit',
-                disabled: !newGoal.title || !newGoal.target_amount || !newGoal.target_date || loading,
-                className: 'w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50 transition-colors'
-              }, loading ? 'Menyimpan...' : 'Simpan Target')
-            )
-          ),
-
-          // Current Goals
-          React.createElement('div', {
-            className: 'bg-white rounded-2xl p-6 shadow-sm'
-          },
-            React.createElement('h3', {
-              className: 'text-xl font-bold text-gray-900 mb-4'
-            }, 'Target Keuangan Anda'),
-            React.createElement('div', {
-              className: 'space-y-4'
-            },
-              goals.length === 0 
-                ? React.createElement('p', {
-                    className: 'text-gray-500 text-center py-8'
-                  }, 'Belum ada target keuangan. Buat target pertama Anda!')
-                : goals.map((goal) => {
-                    const percentage = (goal.current_amount / goal.target_amount) * 100;
-                    const remaining = goal.target_amount - goal.current_amount;
-                    const daysLeft = Math.ceil((new Date(goal.target_date) - new Date()) / (1000 * 60 * 60 * 24));
-                    
-                    return React.createElement('div', {
-                      key: goal.id,
-                      className: 'border border-gray-200 rounded-lg p-6'
-                    },
-                      React.createElement('div', {
-                        className: 'flex justify-between items-start mb-4'
-                      },
-                        React.createElement('div', {},
-                          React.createElement('h4', {
-                            className: 'text-lg font-semibold text-gray-900'
-                          }, goal.title),
-                          goal.description && React.createElement('p', {
-                            className: 'text-gray-600 text-sm mt-1'
-                          }, goal.description)
-                        ),
-                        React.createElement('div', {
-                          className: 'text-right'
-                        },
-                          React.createElement('div', {
-                            className: 'text-sm text-gray-500'
-                          }, `${daysLeft > 0 ? `${daysLeft} hari lagi` : 'Target tercapai!'}`),
-                          React.createElement('div', {
-                            className: 'text-sm font-medium'
-                          }, new Date(goal.target_date).toLocaleDateString('id-ID'))
-                        )
-                      ),
-                      React.createElement('div', {
-                        className: 'space-y-3'
-                      },
-                        React.createElement('div', {
-                          className: 'flex justify-between text-sm'
-                        },
-                          React.createElement('span', {}, `Progress: Rp ${goal.current_amount.toLocaleString()}`),
-                          React.createElement('span', {}, `Target: Rp ${goal.target_amount.toLocaleString()}`)
-                        ),
-                        React.createElement('div', {
-                          className: 'w-full bg-gray-200 rounded-full h-3'
-                        },
-                          React.createElement('div', {
-                            className: `h-3 rounded-full transition-all ${percentage >= 100 ? 'bg-green-500' : percentage >= 75 ? 'bg-blue-500' : percentage >= 50 ? 'bg-yellow-500' : 'bg-gray-400'}`,
-                            style: { width: `${Math.min(percentage, 100)}%` }
-                          })
-                        ),
-                        React.createElement('div', {
-                          className: 'flex justify-between items-center'
-                        },
-                          React.createElement('span', {
-                            className: 'text-sm font-medium'
-                          }, `${percentage.toFixed(1)}% tercapai`),
-                          remaining > 0 && React.createElement('span', {
-                            className: 'text-sm text-gray-600'
-                          }, `Sisa: Rp ${remaining.toLocaleString()}`)
-                        ),
-                        React.createElement('div', {
-                          className: 'flex space-x-2 mt-4'
-                        },
-                          React.createElement('input', {
-                            type: 'number',
-                            placeholder: 'Update progress',
-                            className: 'flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent',
-                            onKeyPress: (e) => {
-                              if (e.key === 'Enter') {
-                                updateGoalProgress(goal.id, e.target.value);
-                                e.target.value = '';
-                              }
-                            }
-                          }),
-                          React.createElement('button', {
-                            onClick: (e) => {
-                              const input = e.target.previousElementSibling;
-                              if (input.value) {
-                                updateGoalProgress(goal.id, input.value);
-                                input.value = '';
-                              }
-                            },
-                            className: 'px-4 py-2 bg-purple-600 text-white rounded-lg text-sm hover:bg-purple-700 transition-colors'
-                          }, 'Update')
-                        )
-                      )
-                    );
-                  })
-            )
-          )
-        )
-      )
-    );
-  }
-
-  // Reports Page
-  if (currentPage === 'reports') {
-    const monthlyExpensesByCategory = transactions
-      .filter(t => t.type === 'expense')
-      .reduce((acc, transaction) => {
-        acc[transaction.category] = (acc[transaction.category] || 0) + transaction.amount;
-        return acc;
-      }, {});
-
-    const monthlyIncomesByCategory = transactions
-      .filter(t => t.type === 'income')
-      .reduce((acc, transaction) => {
-        acc[transaction.category] = (acc[transaction.category] || 0) + transaction.amount;
-        return acc;
-      }, {});
-
-    const totalExpenses = Object.values(monthlyExpensesByCategory).reduce((sum, amount) => sum + amount, 0);
-    const totalIncome = Object.values(monthlyIncomesByCategory).reduce((sum, amount) => sum + amount, 0);
-
-    return React.createElement('div', {
-      className: `min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`
-    },
-      React.createElement('header', {
-        className: 'bg-white border-b border-gray-200 px-4 py-3'
-      },
-        React.createElement('div', {
-          className: 'flex items-center justify-between'
-        },
-          React.createElement('button', {
-            onClick: () => setCurrentPage('dashboard'),
-            className: 'p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors'
-          }, '← Kembali'),
-          React.createElement('h1', {
-            className: 'text-lg font-bold text-gray-900'
-          }, 'Laporan Keuangan'),
-          React.createElement('div', {})
-        )
-      ),
-      React.createElement('main', {
-        className: 'pt-6 px-4 pb-20'
-      },
-        React.createElement('div', {
-          className: 'max-w-6xl mx-auto space-y-6'
-        },
-          // Summary Cards
-          React.createElement('div', {
-            className: 'grid grid-cols-1 md:grid-cols-3 gap-6'
-          },
-            React.createElement('div', {
-              className: 'bg-white rounded-2xl p-6 shadow-sm'
-            },
-              React.createElement('div', {
-                className: 'flex items-center justify-between mb-4'
-              },
-                React.createElement('div', {
-                  className: 'p-3 bg-green-100 rounded-lg'
-                },
-                  createIcon('trending-up', 'h-6 w-6 text-green-600')
-                )
-              ),
-              React.createElement('div', {
-                className: 'text-2xl font-bold text-gray-900'
-              }, `Rp ${totalIncome.toLocaleString()}`),
-              React.createElement('div', {
-                className: 'text-gray-600 text-sm'
-              }, 'Total Pemasukan'),
-              React.createElement('div', {
-                className: 'text-green-600 text-sm font-medium mt-2'
-              }, `${transactions.filter(t => t.type === 'income').length} transaksi`)
-            ),
-            React.createElement('div', {
-              className: 'bg-white rounded-2xl p-6 shadow-sm'
-            },
-              React.createElement('div', {
-                className: 'flex items-center justify-between mb-4'
-              },
-                React.createElement('div', {
-                  className: 'p-3 bg-red-100 rounded-lg'
-                },
-                  createIcon('trending-down', 'h-6 w-6 text-red-600')
-                )
-              ),
-              React.createElement('div', {
-                className: 'text-2xl font-bold text-gray-900'
-              }, `Rp ${totalExpenses.toLocaleString()}`),
-              React.createElement('div', {
-                className: 'text-gray-600 text-sm'
-              }, 'Total Pengeluaran'),
-              React.createElement('div', {
-                className: 'text-red-600 text-sm font-medium mt-2'
-              }, `${transactions.filter(t => t.type === 'expense').length} transaksi`)
-            ),
-            React.createElement('div', {
-              className: 'bg-white rounded-2xl p-6 shadow-sm'
-            },
-              React.createElement('div', {
-                className: 'flex items-center justify-between mb-4'
-              },
-                React.createElement('div', {
-                  className: `p-3 ${totalIncome - totalExpenses >= 0 ? 'bg-blue-100' : 'bg-yellow-100'} rounded-lg`
-                },
-                  createIcon('dollar-sign', `h-6 w-6 ${totalIncome - totalExpenses >= 0 ? 'text-blue-600' : 'text-yellow-600'}`)
-                )
-              ),
-              React.createElement('div', {
-                className: 'text-2xl font-bold text-gray-900'
-              }, `Rp ${(totalIncome - totalExpenses).toLocaleString()}`),
-              React.createElement('div', {
-                className: 'text-gray-600 text-sm'
-              }, 'Net Cash Flow'),
-              React.createElement('div', {
-                className: `${totalIncome - totalExpenses >= 0 ? 'text-blue-600' : 'text-yellow-600'} text-sm font-medium mt-2`
-              }, totalIncome - totalExpenses >= 0 ? 'Surplus' : 'Defisit')
-            )
-          ),
-
-          // Expense Breakdown
-          React.createElement('div', {
-            className: 'bg-white rounded-2xl p-6 shadow-sm'
-          },
-            React.createElement('h3', {
-              className: 'text-xl font-bold text-gray-900 mb-6'
-            }, 'Breakdown Pengeluaran'),
-            React.createElement('div', {
-              className: 'space-y-4'
-            },
-              Object.entries(monthlyExpensesByCategory).length === 0 
-                ? React.createElement('p', {
-                    className: 'text-gray-500 text-center py-8'
-                  }, 'Belum ada data pengeluaran untuk ditampilkan.')
-                : Object.entries(monthlyExpensesByCategory)
-                    .sort(([,a], [,b]) => b - a)
-                    .map(([category, amount]) => {
-                      const categoryInfo = categories[category];
-                      const percentage = (amount / totalExpenses) * 100;
-                      
-                      return React.createElement('div', {
-                        key: category,
-                        className: 'flex items-center justify-between p-4 border border-gray-200 rounded-lg'
-                      },
-                        React.createElement('div', {
-                          className: 'flex items-center'
-                        },
-                          createIcon(categoryInfo?.icon || 'circle', `h-6 w-6 ${categoryInfo?.color || 'text-gray-500'} mr-3`),
-                          React.createElement('div', {},
-                            React.createElement('div', {
-                              className: 'font-medium text-gray-900'
-                            }, categoryInfo?.name || category),
-                            React.createElement('div', {
-                              className: 'text-sm text-gray-500'
-                            }, `${percentage.toFixed(1)}% dari total pengeluaran`)
-                          )
-                        ),
-                        React.createElement('div', {
-                          className: 'text-right'
-                        },
-                          React.createElement('div', {
-                            className: 'font-semibold text-gray-900'
-                          }, `Rp ${amount.toLocaleString()}`),
-                          budgets[category] && React.createElement('div', {
-                            className: `text-sm ${amount > budgets[category] ? 'text-red-600' : 'text-green-600'}`
-                          }, `Budget: Rp ${budgets[category].toLocaleString()}`)
-                        )
+                {/* Category */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Kategori</label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {currentCategories.map(([key, category]) => {
+                      const Icon = category.icon;
+                      return (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => setNewTransaction(prev => ({ ...prev, category: key }))}
+                          className={`p-4 rounded-xl border-2 transition-colors text-left ${
+                            newTransaction.category === key
+                              ? 'border-blue-500 bg-blue-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <Icon className={`h-6 w-6 ${category.color} mb-2`} />
+                          <div className="font-medium text-gray-900 text-sm">{category.name}</div>
+                        </button>
                       );
-                    })
-            )
-          ),
+                    })}
+                  </div>
+                </div>
 
-          // Recent Transactions
-          React.createElement('div', {
-            className: 'bg-white rounded-2xl p-6 shadow-sm'
-          },
-            React.createElement('h3', {
-              className: 'text-xl font-bold text-gray-900 mb-6'
-            }, 'Transaksi Terbaru'),
-            React.createElement('div', {
-              className: 'space-y-3'
-            },
-              transactions.length === 0 
-                ? React.createElement('p', {
-                    className: 'text-gray-500 text-center py-8'
-                  }, 'Belum ada transaksi untuk ditampilkan.')
-                : transactions.slice(0, 10).map((transaction) => {
-                    const categoryInfo = categories[transaction.category];
-                    
-                    return React.createElement('div', {
-                      key: transaction.id,
-                      className: 'flex items-center justify-between p-4 border border-gray-200 rounded-lg'
-                    },
-                      React.createElement('div', {
-                        className: 'flex items-center'
-                      },
-                        createIcon(categoryInfo?.icon || 'circle', `h-5 w-5 ${categoryInfo?.color || 'text-gray-500'} mr-3`),
-                        React.createElement('div', {},
-                          React.createElement('div', {
-                            className: 'font-medium text-gray-900'
-                          }, transaction.description || categoryInfo?.name || transaction.category),
-                          React.createElement('div', {
-                            className: 'text-sm text-gray-500'
-                          }, new Date(transaction.date).toLocaleDateString('id-ID'))
-                        )
-                      ),
-                      React.createElement('div', {
-                        className: `font-semibold ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}`
-                      }, `${transaction.type === 'income' ? '+' : '-'}Rp ${transaction.amount.toLocaleString()}`)
-                    );
-                  })
-            )
-          )
-        )
-      )
+                {/* Description */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Keterangan (Opsional)</label>
+                  <input
+                    type="text"
+                    value={newTransaction.description}
+                    onChange={(e) => setNewTransaction(prev => ({ ...prev, description: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Contoh: Makan siang di kantin"
+                  />
+                </div>
+
+                {/* Date */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
+                  <input
+                    type="date"
+                    value={newTransaction.date}
+                    onChange={(e) => setNewTransaction(prev => ({ ...prev, date: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex space-x-4">
+                  <button
+                    type="submit"
+                    disabled={!newTransaction.amount || !newTransaction.category || loading}
+                    className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {loading ? 'Menyimpan...' : 'Simpan Transaksi'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentPage('dashboard')}
+                    className="px-6 py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Batal
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
     );
   }
 
-  return React.createElement('div', {}, 'Loading...');
+  // Placeholder for other pages
+  const PlaceholderPage = ({ title, icon: Icon, description }) => (
+    <div className={`min-h-screen bg-gray-50 ${darkMode ? 'dark' : ''}`}>
+      <header className="bg-white border-b border-gray-200 px-4 py-3">
+        <div className="flex items-center justify-between">
+          <button 
+            onClick={() => setCurrentPage('dashboard')}
+            className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            ← Kembali
+          </button>
+          <h1 className="text-lg font-bold text-gray-900">{title}</h1>
+          <div></div>
+        </div>
+      </header>
+
+      <main className="pt-6 px-4 pb-20">
+        <div className="text-center py-8">
+          <Icon className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
+          <p className="text-gray-600 mb-8">{description}</p>
+          <button 
+            onClick={() => setCurrentPage('dashboard')}
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Kembali ke Dashboard
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+
+  if (currentPage === 'budget') {
+    return <PlaceholderPage title="Budget Management" icon={Target} description="Fitur budget sedang dalam pengembangan. Anda akan dapat mengatur budget bulanan untuk berbagai kategori pengeluaran." />;
+  }
+
+  if (currentPage === 'goals') {
+    return <PlaceholderPage title="Target Keuangan" icon={Trophy} description="Fitur target keuangan sedang dalam pengembangan. Anda akan dapat menetapkan dan melacak berbagai tujuan finansial." />;
+  }
+
+  if (currentPage === 'reports') {
+    return <PlaceholderPage title="Laporan Keuangan" icon={BarChart3} description="Fitur laporan keuangan sedang dalam pengembangan. Anda akan dapat melihat analisis detail tentang keuangan Anda." />;
+  }
+
+  return <div>Loading...</div>;
 }
 
-// Initialize the app
-const { createRoot } = ReactDOM;
-const root = createRoot(document.getElementById('root'));
-root.render(React.createElement(FinanceApp));gray-600 mt-2'
-          }, 'Personal Finance Management'),
-          React.createElement('p', {
-            className: 'text-sm text-blue-600 font-medium'
-          }, 'Bank Indonesia Gorontalo')
-        ),
-        
-        React.createElement('form', {
-          onSubmit: isRegistering ? handleRegister : handleLogin,
-          className: 'space-y-4'
-        },
-          React.createElement('div', {},
-            React.createElement('label', {
-              className: 'block text-sm font-medium text-gray-700 mb-2'
-            }, 'Email'),
-            React.createElement('input', {
-              type: 'email',
-              value: email,
-              onChange: (e) => setEmail(e.target.value),
-              className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-              placeholder: 'fikry.ma@gmail.com',
-              required: true
-            })
-          ),
-          React.createElement('div', {},
-            React.createElement('label', {
-              className: 'block text-sm font-medium text-gray-700 mb-2'
-            }, 'Password'),
-            React.createElement('input', {
-              type: 'password',
-              value: password,
-              onChange: (e) => setPassword(e.target.value),
-              className: 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent',
-              placeholder: '••••••••',
-              required: true
-            })
-          ),
-          React.createElement('button', {
-            type: 'submit',
-            disabled: loading,
-            className: 'w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 transition-colors'
-          }, loading ? 'Loading...' : (isRegistering ? 'Daftar' : 'Masuk')),
-          React.createElement('button', {
-            type: 'button',
-            onClick: toggleAuthMode,
-            className: 'w-full border border-blue-600 text-blue-600 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors'
-          }, isRegistering ? 'Sudah punya akun? Masuk' : 'Belum punya akun? Daftar')
-        )
-      )
-    );
-  }
-
-  // Risk Assessment Page (keeping existing logic)
-  if (currentPage === 'risk-assessment') {
-    if (riskProfile) {
-      return React.createElement('div', {
-        className: 'min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4'
-      },
-        React.createElement('div', {
-          className: 'bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl'
-        },
-          React.createElement('div', {
-            className: 'text-center mb-8'
-          },
-            React.createElement('div', {
-              className: 'text-6xl mb-4'
-            }, riskProfile.icon),
-            React.createElement('h2', {
-              className: 'text-3xl font-bold text-gray-900'
-            }, riskProfile.type),
-            React.createElement('p', {
-              className: `text-xl ${riskProfile.color} font-semibold mt-2`
-            }, riskProfile.description)
-          ),
-          React.createElement('div', {
-            className: 'space-y-6'
-          },
-            React.createElement('div', {},
-              React.createElement('h3', {
-                className: 'text-lg font-semibold text-gray-900 mb-3'
-              }, 'Karakteristik Anda:'),
-              React.createElement('ul', {
-                className: 'space-y-2'
-              }, riskProfile.characteristics.map((char, index) =>
-                React.createElement('li', {
-                  key: index,
-                  className: 'flex items-center text-gray-700'
-                },
-                  createIcon('check-circle', 'h-5 w-5 text-green-500 mr-3'),
-                  char
-                )
-              ))
-            ),
-            React.createElement('div', {},
-              React.createElement('h3', {
-                className: 'text-lg font-semibold text-gray-900 mb-3'
-              }, 'Rekomendasi Investasi:'),
-              React.createElement('p', {
-                className: 'text-gray-700 bg-gray-50 p-4 rounded-lg'
-              }, riskProfile.recommendation)
-            ),
-            React.createElement('button', {
-              onClick: finishRiskAssessment,
-              className: 'w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors'
-            }, 'Mulai Kelola Keuangan Saya')
-          )
-        )
-      );
-    }
-
-    const currentQuestion = riskQuestions[riskAssessmentStep];
-
-    return React.createElement('div', {
-      className: 'min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4'
-    },
-      React.createElement('div', {
-        className: 'bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl'
-      },
-        React.createElement('div', {
-          className: 'mb-8'
-        },
-          React.createElement('div', {
-            className: 'flex justify-between items-center mb-4'
-          },
-            React.createElement('span', {
-              className: 'text-sm font-medium text-indigo-600'
-            }, `Langkah ${riskAssessmentStep} dari 5`),
-            React.createElement('span', {
-              className: 'text-sm text-gray-500'
-            }, `${Math.round((riskAssessmentStep / 5) * 100)}% selesai`)
-          ),
-          React.createElement('div', {
-            className: 'w-full bg-gray-200 rounded-full h-2'
-          },
-            React.createElement('div', {
-              className: 'bg-indigo-600 h-2 rounded-full transition-all duration-300',
-              style: { width: `${(riskAssessmentStep / 5) * 100}%` }
-            })
-          )
-        ),
-        React.createElement('div', {
-          className: 'mb-8'
-        },
-          React.createElement('h2', {
-            className: 'text-2xl font-bold text-gray-900 mb-2'
-          }, currentQuestion.title),
-          React.createElement('p', {
-            className: 'text-
+export default FinanceApp;
